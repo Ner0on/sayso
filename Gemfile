@@ -24,9 +24,10 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 gem 'twitter-bootstrap-rails','~> 3.2.0'
 
-group :development do
+group :development do 
 	gem 'sqlite3'
-	gem 'better_errors'
+	gem "better_errors"
+	gem "binding_of_caller"
 end
 
 group :production do 
