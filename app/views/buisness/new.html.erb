@@ -1,0 +1,13 @@
+<div class='container'>
+	<h3>Add business</h3>
+	<hr>
+	<div class="pull-left"> 
+		<%= form_for @business, url:{:action => 'create'}, html:{class: "registration_form"} do |f| %>
+			<%= f.text_field :business_name, placeholder:'Business name',class: 'form-control' %>
+		</br>
+			<%= f.text_field :location, placeholder:'Business location', class: 'form-control' %>
+		</br>
+			<%= f.submit "Add business", class: 'btn btn-info' %>
+		<% end %>
+	</div>
+</div>
