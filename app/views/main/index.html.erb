@@ -1,0 +1,14 @@
+<div class="container">
+	<h3>Last added buisnesses</h3>
+	<hr>
+	<div class="col-md-4">
+		<ul style="list-style-type: none;padding-left:0;">
+			<% @buisness.each do |b| %>
+				<li><a href="business/<%= b.id %>"><%= b.business_name %></a> (reviews)<br />
+					<span><%= b.location %></span>
+				</li>
+				<hr>
+			<% end %>
+		</ul>
+	</div>
+</div>

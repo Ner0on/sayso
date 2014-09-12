@@ -18,7 +18,9 @@ class BuisnessController < ApplicationController
 		render 'new'
 	end
 
-	
+	def show
+		@buisness = Business.find(params[:id])
+	end
 
 	private
 
