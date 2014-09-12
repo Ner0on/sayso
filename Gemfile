@@ -23,6 +23,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
 gem 'twitter-bootstrap-rails','~> 3.2.0'
+gem 'devise'
 
 group :development do 
 	gem 'sqlite3'

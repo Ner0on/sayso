@@ -1,0 +1,40 @@
+<div class="container" style="margin-bottom:50px;">
+	<div class="navbar navbar-default navbar-fixed-top">
+	    <div class="container">
+	        <div class="navbar-header">
+	            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	                <span class="icon-bar"></span>
+	            </button>
+	            <a class="navbar-brand" href="/home">SaySo</a>
+	        </div>
+	        <center>
+	            <div class="navbar-collapse collapse" id="navbar-main">    
+	                <% if !user_signed_in? %>
+	                    <%= form_for(resource,:html => {:class => "navbar-form navbar-right"},  as: resource_name, url: session_path(resource_name)) do |f| %>
+		                    <div class="form-group">
+		                    <%= f.email_field :email, autofocus: true, class: 'form-control', placeholder: "Email" %>
+		                    </div>
+		                    <div class="form-group">
+		                    <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: "Password" %>
+		                    </div>
+		                    <%= f.submit "Sign in", class: "btn btn-default"  %>                
+	    	            <% end %>
+						<ul class="nav navbar-nav pull-right" style="border-right: 1px solid lightgray;">
+							<li><a href="/users/sign_up" class="nav-btns">Sign up</a></li>
+						</ul>
+	                <% else %>
+	                	<ul class="nav navbar-nav">
+		                   <li><a href="/add_business">Add business</a></li> 
+		                </ul>
+	                    <ul class="nav navbar-nav pull-right">
+	                      <li><span style="position:relative;display:block;padding:10px 15px;padding-top:15px;">Hello, <b><%=current_user.name%></b></span></li>
+	                      <li><%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %> </li>
+	                    </ul>
+	                <% end %>
+	            </div> 
+	        </center>
+	    </div>
+	</div>
+</div>
