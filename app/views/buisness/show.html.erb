@@ -1,9 +1,26 @@
 <div class="container">
-	<h3><%= @buisness.business_name%></h2>
+	<h3 style="float:left;margin-right:10px;"><%= @buisness.business_name%></h3>
+
+	<ul class="rating-stars" style="margin-top:23px;float:left;padding:0;">
+		<% @rated_stars.times do  %>
+			<li>
+				<i class="fa fa-star star"></i>
+			</li>
+		<% end %>
+		<% @unrated_stars.times do  %>
+			<li>
+				<i class="fa fa-star-o star"></i>
+			</li>
+		<% end %>
+	</ul>
+	<br style="clear:both">
+	<h5>(<%= @reviews_count %> reviews)</h5>
 	<hr>
 	<div class="well">
 		<h4>Location</h4><span><%= @buisness.location %></span>
-		<button class="btn btn-danger pull-right">Write a review</button>
+		<% if user_signed_in? %>
+			<a href="#review" class="btn btn-danger pull-right">Write a review</a>
+		<%end%>
 	</div>
 	<div>
 		<ul style="list-style-type: none;padding-left:0;">
@@ -11,6 +28,112 @@
 		</ul>
 	</div>
 	<div style="border:1px solid lightgray;margin-top:-12px;border-bottom-right-radius:5px;">
-		
+		<ul id="reviews" class="rating-stars" style="padding:20px 10px;">
+			<% @reviews.each do |r| %>
+				<li>	
+					<ul class="rating-stars" style="padding:0;">
+
+						<a href="#link_to_user"><%= r.user.name %></a>
+						
+						<% r.rating.times do %>
+							<li><i class="fa fa-star star"></i></li>
+						<% end %>
+					
+						<span><%= time_ago_in_words(r.created_at)%> ago </span>
+						
+						<% if user_signed_in? && current_user.id == r.user_id %>
+							<a href="/review/<%= r.id %>" class="btn btn-default pull-right"><i class="fa fa-trash-o"></i></a>
+						<% end %>
+
+					</ul>
+					<br/>
+					<p><%= r.comment %></p>
+				</li>
+				<hr>
+			<% end %>
+		</ul>
+		<div id="review" class="well" style="width:500px;margin-left:20px;">
+			<% if user_signed_in? %>
+
+				<h4>Your review about <b><%= @buisness.business_name%></b></h4>
+				<b style="float:left;margin-right:10px;">Rating</b>
+				<ul class="rating-stars rating">
+					<li><i class="fa fa-star-o star unrated" value="1"></i></li>
+					<li><i class="fa fa-star-o star unrated" value="2"></i></li>
+					<li><i class="fa fa-star-o star unrated" value="3"></i></li>
+					<li><i class="fa fa-star-o star unrated" value="4"></i></li>
+					<li><i class="fa fa-star-o star unrated" value="5"></i></li>
+				</ul>
+				<b>Review</b>
+				<textarea cols="60" rows="5" id="comment"></textarea>
+				<button class="btn btn-success" id="add_review">Add review</button>
+
+			<% else %>
+
+				<h4>Create an account to write a review</h4>
+				<p>You can <a href="/users/sign_up">Sign up</a> or <a href="/users/sign_in">Sign in</a></p>
+
+			<% end %>
+		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+
+	$( document ).ready(function(){
+
+		$(".rating li i").mouseover(function(){
+			$(this).removeClass('fa-star-o').addClass('fa-star');
+			$(this).parent().prevAll().find('.fa-star-o').removeClass('fa-star-o').addClass('fa-star');
+		}).mouseout(function(){
+			if($(this).hasClass('rated')){
+				// do nothing
+			} else {
+				$(this).removeClass('fa-star').addClass('fa-star-o');
+				$(this).parent().prevAll().find('.fa-star').removeClass('fa-star').addClass('fa-star-o');
+			}
+		});
+
+
+		$('.rating li i').on("click", function(){
+
+			$(this).parent().parent().find('.active').removeClass('active')
+			$(this).addClass('active');
+			$(this).parent().prevAll().find('.star').removeClass('unrated').addClass('rated');
+			$(this).removeClass('unrated').addClass('rated');
+
+			$(this).parent().nextAll().find('.star').removeClass('fa-star').addClass('fa-star-o');
+			//$(this).unbind('mouseout')
+
+		})
+		
+	});
+
+	$('#add_review').on('click',function(){
+
+		var rating = $('.rating li').find('.active').attr('value');
+		var comment = $('#comment').val();
+
+		$.ajax({
+			url: '<%= add_review_path %>',
+			type: 'POST',
+			data:{comment: comment, rating: rating, buisness_id: <%= @buisness.id %> },
+			success:function(data){
+
+				var ranked_stars = data.rating
+				var unranked_stars = 5 - ranked_stars
+				addStars(ranked_stars);
+
+				$('#reviews').prepend('<li><a href="#link_to_user">'+data.user_name+'</a><ul class="rating-stars"></ul><br/><p>'+data.comment+'</p></li><hr>');
+
+			}
+		});
+	});
+
+	function addStars(ranked_stars){
+
+ 		for (var i=1; i<=ranked_stars; i++) {
+ 			$().append('<li><i class="fa fa-star star"></i></li>')
+ 		}
+	};
+</script>

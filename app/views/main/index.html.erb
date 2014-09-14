@@ -1,11 +1,25 @@
 <div class="container">
-	<h3>Last added buisnesses</h3>
+	<h3>Last added businesses</h3>
 	<hr>
 	<div class="col-md-4">
 		<ul style="list-style-type: none;padding-left:0;">
-			<% @buisness.each do |b| %>
-				<li><a href="business/<%= b.id %>"><%= b.business_name %></a> (reviews)<br />
-					<span><%= b.location %></span>
+			<% @businesess.each do |b| %>
+				<li>
+					<ul class="rating-stars" style="margin-top:23px;padding:0;">
+						<a href="business/<%= b[:id] %>"><%= b[:name] %></a> 
+						<% b[:ranked_stars].times do  %>
+							<li>
+								<i class="fa fa-star star"></i>
+							</li>
+						<% end %>
+						<% b[:unranked_stars].times do  %>
+							<li>
+								<i class="fa fa-star-o star"></i>
+							</li>
+						<% end %>
+						( <%= b[:reviews] %> reviews)
+					</ul>
+					<span><%= b[:location] %></span>
 				</li>
 				<hr>
 			<% end %>

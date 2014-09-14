@@ -30,6 +30,7 @@
 		                </ul>
 	                    <ul class="nav navbar-nav pull-right">
 	                      <li><span style="position:relative;display:block;padding:10px 15px;padding-top:15px;">Hello, <b><%=current_user.name%></b></span></li>
+	                      <li><a href="/user/<%= current_user.id %>">Profie</a></li>
 	                      <li><%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %> </li>
 	                    </ul>
 	                <% end %>

@@ -5,6 +5,7 @@ class BuisnessController < ApplicationController
 	end
 
 	def create
+
 		@business = Business.new
 		
 		result = Business.create(business_params)
@@ -19,9 +20,20 @@ class BuisnessController < ApplicationController
 	end
 
 	def show
+
 		@buisness = Business.find(params[:id])
+		@reviews = @buisness.reviews.order('id desc')
+		@reviews_count = @buisness.reviews.count
+		@rated_stars = (@buisness.reviews.sum(:rating) / @reviews_count).to_i
+		@unrated_stars = 5 - @rated_stars
+
 	end
 
+	def add_review
+
+		
+	end
+	
 	private
 
 	def business_params
