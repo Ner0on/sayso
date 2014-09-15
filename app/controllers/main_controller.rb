@@ -1,4 +1,5 @@
 class MainController < ApplicationController
+
 	def index
 		buisness = Business.all
 		@businesess = display_stars(buisness)
@@ -10,7 +11,7 @@ class MainController < ApplicationController
 	def display_stars(buisness)
 		buisness.inject([]) do |businesess, b|
 			rating = b.reviews.sum(:rating)
-			ranked_stars = rating / b.reviews.count
+			ranked_stars = rating == 0 ? 0 : rating / b.reviews.count
 			data = {
 				id: b.id,
 				name: b.business_name,
