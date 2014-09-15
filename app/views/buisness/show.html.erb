@@ -1,3 +1,6 @@
+<div class="alert alert-danger hide">
+	<p>Rating and review can`t be empty!</p>
+</div>
 <div class="container">
 	<h3 style="float:left;margin-right:10px;"><%= @buisness.business_name%></h3>
 
@@ -113,28 +116,37 @@
 
 		var rating = $('.rating li').find('.active').attr('value');
 		var comment = $('#comment').val();
+		
+		if (rating != '' && comment != ''){
+			$.ajax({
+				url: '<%= add_review_path %>',
+				type: 'POST',
+				data:{comment: comment, rating: rating, buisness_id: <%= @buisness.id %> },
+				success:function(data){
 
-		$.ajax({
-			url: '<%= add_review_path %>',
-			type: 'POST',
-			data:{comment: comment, rating: rating, buisness_id: <%= @buisness.id %> },
-			success:function(data){
+					var ranked_stars = data.rating
+					var unranked_stars = 5 - ranked_stars
+					var review_id = data.review_id
 
-				// var ranked_stars = data.rating
-				// var unranked_stars = 5 - ranked_stars
 
-				// addStars(ranked_stars);
+					$('#comment').val('');
+					$('.rating li').find('.rated').removeClass('rated').addClass('unrated').removeClass('fa-star').addClass('fa-star-o');
+					$('.alert').addClass('hide');
+					$('#reviews').prepend('<li><ul class="rating-stars" style="padding:0;"><a href="#link_to_user" class="review_id-'+review_id+'">'+data.user_name+'</a><span>just now</span><a href="/review/'+review_id+'" class="btn btn-default pull-right"><i class="fa fa-trash-o"></i></a></ul><br/><p>'+data.comment+'</p></li><hr>');
+					addStars(ranked_stars,review_id);
 
-				$('#reviews').prepend('<li><a href="#link_to_user">'+data.user_name+'</a><ul class="rating-stars"></ul><br/><p>'+data.comment+'</p></li><hr>');
-
-			}
-		});
+				}
+			});
+		}else{
+			$('.alert').removeClass('hide');
+		}
+		
 	});
 
-	// function addStars(ranked_stars){
+	function addStars(ranked_stars,review_id){
 
- // 		for (var i=1; i<=ranked_stars; i++) {
- // 			$().append('<li><i class="fa fa-star star"></i></li>')
- // 		}
-	// };
+ 		for (var i = 1; i <= ranked_stars; i++) {
+ 			$('.review_id-'+review_id).append('<li> <i class="fa fa-star star"></i> </li>');
+ 		}
+	};
 </script>

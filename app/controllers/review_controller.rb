@@ -6,7 +6,7 @@ class ReviewController < ApplicationController
 		buisness_id = params[:buisness_id].to_i
 		user_id = current_user.id
 		
-		Review.create(user_id: user_id, business_id: buisness_id, rating: rating, comment: comment )
+		review = Review.create(user_id: user_id, business_id: buisness_id, rating: rating, comment: comment )
 
 		user_name = User.find(user_id).name
 
@@ -14,7 +14,8 @@ class ReviewController < ApplicationController
 			comment: comment,
 			rating: rating,
 			buisness_id: buisness_id,
-			user_name: user_name
+			user_name: user_name,
+			review_id: review.id
 		}
 
 	end
