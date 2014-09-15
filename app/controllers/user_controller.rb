@@ -1,7 +1,9 @@
 class UserController < ApplicationController
+	before_filter :authenticate_user!
+	
 	def show
 		@user = User.find(params[:id])
-		@reviews = Review.where(user_id: current_user.id)
+		@reviews = Review.where(user_id: current_user.id).order('id desc')
 		@reviewed_buisnesses = rated_buisnesses(@reviews).uniq
 	end
 
@@ -10,7 +12,7 @@ class UserController < ApplicationController
 	def rated_buisnesses(reviews)
 
 		reviews.inject([]) do |reviews, r|
-			
+
 			buisness = Business.find(r.business_id)
 			rating = buisness.reviews.sum(:rating)
 			ranked_stars = rating == 0 ? 0 : rating / buisness.reviews.count

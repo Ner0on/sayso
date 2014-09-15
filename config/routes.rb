@@ -13,8 +13,7 @@ get 'user/business/:id' => 'buisness#show'
 get 'review/:id' => 'review#destroy'
 post 'add_review' => 'review#create', as: :add_review
 
-get 'user/:id' => 'user#show'
-
+get 'user/:id' => "user#show", as: :profile 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
