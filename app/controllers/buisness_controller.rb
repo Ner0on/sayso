@@ -1,5 +1,4 @@
 class BuisnessController < ApplicationController
-	before_filter :authenticate_user!
 	
 	def new
 		@business = Business.new
