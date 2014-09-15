@@ -24,7 +24,7 @@ class BuisnessController < ApplicationController
 		@buisness = Business.find(params[:id])
 		@reviews = @buisness.reviews.order('id desc')
 		@reviews_count = @buisness.reviews.count
-		@rated_stars = (@buisness.reviews.sum(:rating) / @reviews_count).to_i
+		@rated_stars = @reviews.blank? ? 0 : (@buisness.reviews.sum(:rating) / @reviews_count).to_i
 		@unrated_stars = 5 - @rated_stars
 
 	end
