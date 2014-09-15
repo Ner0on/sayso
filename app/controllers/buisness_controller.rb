@@ -8,12 +8,12 @@ class BuisnessController < ApplicationController
 
 		@business = Business.new
 		
-		result = Business.create(business_params)
+		result = Business.create(business_params).valid?
 
 		if result
 			flash.now[:notice] = 'Business succefully added'
 		else
-			flash.now[:alert] = 'Error! Business not added'
+			flash.now[:alert] = 'Error! Business not added.Fill in all fields'
 		end
 
 		render 'new'
