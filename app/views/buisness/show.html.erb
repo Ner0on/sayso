@@ -97,7 +97,7 @@
 
 		$('.rating li i').on("click", function(){
 
-			$(this).parent().parent().find('.active').removeClass('active')
+			$(this).parent().parent().find('.active').removeClass('active');
 			$(this).addClass('active');
 			$(this).parent().prevAll().find('.star').removeClass('unrated').addClass('rated');
 			$(this).removeClass('unrated').addClass('rated');
@@ -120,9 +120,10 @@
 			data:{comment: comment, rating: rating, buisness_id: <%= @buisness.id %> },
 			success:function(data){
 
-				var ranked_stars = data.rating
-				var unranked_stars = 5 - ranked_stars
-				addStars(ranked_stars);
+				// var ranked_stars = data.rating
+				// var unranked_stars = 5 - ranked_stars
+
+				// addStars(ranked_stars);
 
 				$('#reviews').prepend('<li><a href="#link_to_user">'+data.user_name+'</a><ul class="rating-stars"></ul><br/><p>'+data.comment+'</p></li><hr>');
 
@@ -130,10 +131,10 @@
 		});
 	});
 
-	function addStars(ranked_stars){
+	// function addStars(ranked_stars){
 
- 		for (var i=1; i<=ranked_stars; i++) {
- 			$().append('<li><i class="fa fa-star star"></i></li>')
- 		}
-	};
+ // 		for (var i=1; i<=ranked_stars; i++) {
+ // 			$().append('<li><i class="fa fa-star star"></i></li>')
+ // 		}
+	// };
 </script>
