@@ -5,9 +5,10 @@ root 'main#index'
 
 get 'home' => 'main#index'
 
-get 'add_business' => 'buisness#new'
-post 'add_business' => 'buisness#create'
+get 'add_buisness' => 'buisness#new'
+post 'add_buisness' => 'buisness#create'
 get 'business/:id' => 'buisness#show'
+get 'user/business/:id' => 'buisness#show'
 
 get 'review/:id' => 'review#destroy'
 post 'add_review' => 'review#create', as: :add_review

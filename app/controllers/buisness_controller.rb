@@ -28,12 +28,7 @@ class BuisnessController < ApplicationController
 		@unrated_stars = 5 - @rated_stars
 
 	end
-
-	def add_review
-
 		
-	end
-	
 	private
 
 	def business_params

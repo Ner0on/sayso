@@ -1,5 +1,30 @@
 <div class="container">
+	<h3>Welcome back, <%= current_user.name %> !</h3>
+	<hr>
 	<div class="col-md-5 well">
-
+		<h4>Businesses rated by me</h4>
+		<hr>
+		<ul style="list-style-type: none;padding-left:0;">
+			<% @reviewed_buisnesses.each do |b| %>
+				<li>
+					<ul class="rating-stars" style="margin-top:23px;padding:0;">
+						<a href="business/<%= b[:id] %>"><%= b[:name] %></a> 
+						<% b[:ranked_stars].times do  %>
+						<li>
+							<i class="fa fa-star star"></i>
+						</li>
+						<% end %>
+						<% b[:unranked_stars].times do  %>
+							<li>
+								<i class="fa fa-star-o star"></i>
+							</li>
+						<% end %>
+						( <%= b[:reviews] %> reviews)
+					</ul>
+					<span><%= b[:location] %></span>
+				</li>
+				<hr>
+			<% end %>
+		</ul>
 	</div>
 </div>

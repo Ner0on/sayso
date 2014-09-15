@@ -22,7 +22,6 @@ class MainController < ApplicationController
 				unranked_stars: (5 - ranked_stars)
 			}
 			businesess << data
-			businesess
 		end
 	end
 end
