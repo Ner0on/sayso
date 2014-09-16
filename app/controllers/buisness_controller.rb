@@ -1,7 +1,7 @@
 class BuisnessController < ApplicationController
 	def index
 		if params[:search]
-			buisness = Business.where("business_name LIKE ?", "%#{params[:search]}%").order('id desc')
+			buisness = Business.search(params[:search]).order('id desc')
 		else
 			buisness = Business.all.order('id desc')
 		end
