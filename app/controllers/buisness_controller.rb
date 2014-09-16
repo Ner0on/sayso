@@ -1,5 +1,13 @@
 class BuisnessController < ApplicationController
-	
+	def index
+		if params[:search]
+			buisness = Business.where("business_name LIKE ?", "%#{params[:search]}%").order('id desc')
+		else
+			buisness = Business.all.order('id desc')
+		end
+			@businesess = display_stars(buisness)
+	end	
+
 	def new
 		@business = Business.new
 	end
@@ -33,5 +41,22 @@ class BuisnessController < ApplicationController
 
 	def business_params
 		params.require(:business).permit( :business_name, :location)
+	end
+
+	def display_stars(buisness)
+		buisness.inject([]) do |businesess, b|
+			rating = b.reviews.sum(:rating)
+			ranked_stars = rating == 0 ? 0 : rating / b.reviews.count
+			data = {
+				id: b.id,
+				name: b.business_name,
+				rating: rating, 
+				reviews: b.reviews.count,
+				location: b.location,
+				ranked_stars: ranked_stars,
+				unranked_stars: (5 - ranked_stars)
+			}
+			businesess << data
+		end
 	end
 end

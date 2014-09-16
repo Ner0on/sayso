@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
   
   devise_for :users
-root 'main#index'
 
-get 'home' => 'main#index'
+root 'buisness#index'
 
-get 'add_buisness' => 'buisness#new'
-post 'add_buisness' => 'buisness#create'
+get 'businesses' => 'buisness#index', as: :businesses
+get 'add_business' => 'buisness#new'
+post 'add_business' => 'buisness#create'
 get 'business/:id' => 'buisness#show'
 get 'user/business/:id' => 'buisness#show'
 

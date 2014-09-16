@@ -1,6 +1,12 @@
 <div class="container">
 	<h3>Last added businesses</h3>
 	<hr>
+	<div class="col-md-4 pull-right">
+		<%= form_tag(businesses_path, :method => "get") do %>
+	  		<%= text_field_tag :search, params[:search], placeholder: "Search Business", class: 'form-control', style: 'width:200px;float:left;margin-right:5px;' %>
+	  		<%= submit_tag "Search", :name => nil, class: 'btn btn-info'%>
+		<% end %>
+	</div>
 	<div class="col-md-4">
 		<ul style="list-style-type: none;padding-left:0;">
 			<% @businesess.each do |b| %>
