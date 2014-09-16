@@ -36,21 +36,24 @@
 				<li>	
 					<ul class="rating-stars" style="padding:0;">
 
-						<a href="#link_to_user"><%= r.user.name %></a>
+						<a href="#link_to_user"><%= r[:user_name] %></a>
 						
-						<% r.rating.times do %>
+						<% r[:rated_stars].times do %>
 							<li><i class="fa fa-star star"></i></li>
 						<% end %>
-					
-						<span><%= time_ago_in_words(r.created_at)%> ago </span>
+						<% r[:unrated_stars].times do %>
+							<li><i class="fa fa-star-o"></i></li>
+						<% end %>
+
+						<span><%= time_ago_in_words(r[:created_at])%> ago </span>
 						
-						<% if user_signed_in? && current_user.id == r.user_id %>
-							<a href="/review/<%= r.id %>" class="btn btn-default pull-right"><i class="fa fa-trash-o"></i></a>
+						<% if user_signed_in? && current_user.id == r[:user_id] %>
+							<a href="/review/<%= r[:id] %>" class="btn btn-default pull-right"><i class="fa fa-trash-o"></i></a>
 						<% end %>
 
 					</ul>
 					<br/>
-					<p><%= r.comment %></p>
+					<p><%= r[:comment] %></p>
 				</li>
 				<hr>
 			<% end %>
@@ -106,7 +109,6 @@
 			$(this).removeClass('unrated').addClass('rated');
 
 			$(this).parent().nextAll().find('.star').removeClass('fa-star').addClass('fa-star-o');
-			//$(this).unbind('mouseout')
 
 		})
 		
@@ -132,9 +134,9 @@
 					$('#comment').val('');
 					$('.rating li').find('.rated').removeClass('rated').addClass('unrated').removeClass('fa-star').addClass('fa-star-o');
 					$('.alert').addClass('hide');
-					$('#reviews').prepend('<li><ul class="rating-stars" style="padding:0;"><a href="#link_to_user" class="review_id-'+review_id+'">'+data.user_name+'</a><span>just now</span><a href="/review/'+review_id+'" class="btn btn-default pull-right"><i class="fa fa-trash-o"></i></a></ul><br/><p>'+data.comment+'</p></li><hr>');
+					$('#reviews').prepend('<li><ul class="rating-stars" style="padding:0;"><a href="#link_to_user" class="review_id-'+review_id+'">'+data.user_name+'</a><span class="span'+review_id+'">just now</span><a href="/review/'+review_id+'" class="btn btn-default pull-right"><i class="fa fa-trash-o"></i></a></ul><br/><p>'+data.comment+'</p></li><hr>');
 					addStars(ranked_stars,review_id);
-
+					addUnrankedStars(review_id,unranked_stars);
 				}
 			});
 		}else{
@@ -144,9 +146,15 @@
 	});
 
 	function addStars(ranked_stars,review_id){
-
  		for (var i = 1; i <= ranked_stars; i++) {
- 			$('.review_id-'+review_id).append('<li> <i class="fa fa-star star"></i> </li>');
+ 			$('<li> <i class="fa fa-star star"></i> </li>').insertAfter('.review_id-'+review_id);
  		}
 	};
+	
+	function addUnrankedStars(review_id,unranked_stars){
+		for (var i = 1; i <= unranked_stars; i++) {
+ 			$('<li> <i class="fa fa-star-o"></i> </li>').insertBefore('.span'+review_id);
+ 		}
+	};
+
 </script>

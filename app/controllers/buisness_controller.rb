@@ -30,7 +30,12 @@ class BuisnessController < ApplicationController
 	def show
 
 		@buisness = Business.find(params[:id])
-		@reviews = @buisness.reviews.order('id desc')
+
+		raw_reviews = @buisness.reviews.order('id desc')
+		@reviews = rebuild_reviews(raw_reviews)
+
+		
+		
 		@reviews_count = @buisness.reviews.count
 		@rated_stars = @reviews.blank? ? 0 : (@buisness.reviews.sum(:rating) / @reviews_count).to_i
 		@unrated_stars = 5 - @rated_stars
@@ -41,6 +46,23 @@ class BuisnessController < ApplicationController
 
 	def business_params
 		params.require(:business).permit( :business_name, :location)
+	end
+
+	def rebuild_reviews(raw_reviews)
+		raw_reviews.inject([]) do |review, r|
+			unrated_stars = 5 - r.rating
+			data = {
+				id: r.id,
+				user_name: r.user.name,
+				rated_stars: r.rating,
+				unrated_stars: unrated_stars,
+				created_at: r.created_at,
+				user_id: r.user_id,
+				comment: r.comment
+			}
+
+			review << data
+		end		
 	end
 
 	def display_stars(buisness)
@@ -56,6 +78,7 @@ class BuisnessController < ApplicationController
 				ranked_stars: ranked_stars,
 				unranked_stars: (5 - ranked_stars)
 			}
+
 			businesess << data
 		end
 	end
