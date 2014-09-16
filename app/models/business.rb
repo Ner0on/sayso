@@ -5,6 +5,6 @@ class Business < ActiveRecord::Base
 	validates :location, presence: true
 	
 	def self.search(query)
-	  where("business_name LIKE ?", "%#{query}%") 
+	  where("business_name LIKE ?", "%#{query.downcase}%") 
 	end
 end
