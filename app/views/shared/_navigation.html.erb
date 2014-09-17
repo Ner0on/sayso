@@ -8,6 +8,9 @@
 	                <span class="icon-bar"></span>
 	            </button>
 	            <a class="navbar-brand" href="/businesses">SaySo</a>
+	            <ul class="nav navbar-nav">
+		        	<li><a href="/businesses">Home</a></li>
+		        </ul>
 	        </div>
 	        <center>
 	            <div class="navbar-collapse collapse" id="navbar-main">    
@@ -26,7 +29,7 @@
 						</ul>
 	                <% else %>
 	                	<ul class="nav navbar-nav">
-		                   <li><a href="/add_business">Add business</a></li> 
+		                   <li><a href="/add_business">Add business</a></li>
 		                </ul>
 	                    <ul class="nav navbar-nav pull-right">
 	                      <li><span class="signed_user_span">Hello, <b><%=current_user.name%></b></span></li>
