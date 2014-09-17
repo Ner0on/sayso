@@ -13,6 +13,11 @@
  *= require_tree .
  *= require_self
  */
+ .stars_ul {
+ 	margin-top:23px;
+ 	float:left;
+ 	padding:0;
+ }
 .rating-stars li {
 	list-style:none;
 	display: inline;
@@ -21,4 +26,55 @@
 .star{
 	color: #EF3215;
 }
-
+.search_business_field {
+	width:200px;
+	float:left;
+	margin-right:5px;
+}
+.business_list{
+	list-style-type: none;
+	padding-left:0;
+}
+.business_info{
+	margin-top:23px;
+	padding:0;
+}
+.navigation_container {
+	margin-bottom:50px;
+}
+.nav_list {
+	border-right: 1px solid lightgray;
+}
+.signed_user_span{
+	position:relative;
+	display:block;
+	padding:10px 15px;
+	padding-top:15px;
+}
+.business_name{
+	float:left;
+	margin-right:10px;
+}
+.options {
+	list-style-type: none;
+	padding-left:0;
+}
+.options li {
+	border:1px solid lightgray;
+	border-radius:5px;
+	border-bottom:none;
+	padding:7px 20px;
+	width:100px;
+}
+.options_container{
+	border:1px solid lightgray;
+	margin-top:-12px;
+	border-bottom-right-radius:5px;
+}
+.options_container_ul{
+	padding:20px 10px;
+}
+#review{
+	width:500px;
+	margin-left:20px;
+}

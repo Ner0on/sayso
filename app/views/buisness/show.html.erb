@@ -2,9 +2,9 @@
 	<p>Rating and review can`t be empty!</p>
 </div>
 <div class="container">
-	<h3 style="float:left;margin-right:10px;"><%= @buisness.business_name%></h3>
+	<h3 class="business_name"><%= @buisness.business_name%></h3>
 
-	<ul class="rating-stars" style="margin-top:23px;float:left;padding:0;">
+	<ul class="rating-stars stars_ul">
 		<% @rated_stars.times do  %>
 			<li>
 				<i class="fa fa-star star"></i>
@@ -12,7 +12,7 @@
 		<% end %>
 		<% @unrated_stars.times do  %>
 			<li>
-				<i class="fa fa-star-o star"></i>
+				<i class="fa fa-star-o"></i>
 			</li>
 		<% end %>
 	</ul>
@@ -26,12 +26,12 @@
 		<%end%>
 	</div>
 	<div>
-		<ul style="list-style-type: none;padding-left:0;">
-			<li style="border:1px solid lightgray;border-radius:5px;border-bottom:none;padding:7px 20px;width:100px;"><b>Reviews</b></li>
+		<ul class="options">
+			<li><b>Reviews</b></li>
 		</ul>
 	</div>
-	<div style="border:1px solid lightgray;margin-top:-12px;border-bottom-right-radius:5px;">
-		<ul id="reviews" class="rating-stars" style="padding:20px 10px;">
+	<div class="options_container">
+		<ul id="reviews" class="rating-stars options_container_ul">
 			<% @reviews.each do |r| %>
 				<li>	
 					<ul class="rating-stars" style="padding:0;">
@@ -50,7 +50,7 @@
 						<% if user_signed_in? && current_user.id == r[:user_id] %>
 							<a href="/review/<%= r[:id] %>" class="btn btn-default pull-right"><i class="fa fa-trash-o"></i></a>
 						<% end %>
-
+					
 					</ul>
 					<br/>
 					<p><%= r[:comment] %></p>
@@ -58,9 +58,8 @@
 				<hr>
 			<% end %>
 		</ul>
-		<div id="review" class="well" style="width:500px;margin-left:20px;">
+		<div id="review" class="well">
 			<% if user_signed_in? %>
-
 				<h4>Your review about <b><%= @buisness.business_name%></b></h4>
 				<b style="float:left;margin-right:10px;">Rating</b>
 				<ul class="rating-stars rating">
@@ -73,9 +72,7 @@
 				<b>Review</b>
 				<textarea cols="60" rows="5" id="comment"></textarea>
 				<button class="btn btn-success" id="add_review">Add review</button>
-
 			<% else %>
-
 				<h4>Create an account to write a review</h4>
 				<p>You can <a href="/users/sign_up">Sign up</a> or <a href="/users/sign_in">Sign in</a></p>
 
@@ -100,16 +97,12 @@
 			}
 		});
 
-
 		$('.rating li i').on("click", function(){
-
 			$(this).parent().parent().find('.active').removeClass('active');
 			$(this).addClass('active');
 			$(this).parent().prevAll().find('.star').removeClass('unrated').addClass('rated');
 			$(this).removeClass('unrated').addClass('rated');
-
 			$(this).parent().nextAll().find('.star').removeClass('fa-star').addClass('fa-star-o');
-
 		})
 		
 	});
@@ -130,7 +123,6 @@
 					var unranked_stars = 5 - ranked_stars
 					var review_id = data.review_id
 
-
 					$('#comment').val('');
 					$('.rating li').find('.rated').removeClass('rated').addClass('unrated').removeClass('fa-star').addClass('fa-star-o');
 					$('.alert').addClass('hide');
@@ -141,8 +133,7 @@
 			});
 		}else{
 			$('.alert').removeClass('hide');
-		}
-		
+		}		
 	});
 
 	function addStars(ranked_stars,review_id){

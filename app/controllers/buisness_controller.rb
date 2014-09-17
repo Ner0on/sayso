@@ -1,21 +1,24 @@
 class BuisnessController < ApplicationController
 	def index
+
 		if params[:search]
 			buisness = Business.search(params[:search]).order('id desc')
 		else
 			buisness = Business.all.order('id desc')
 		end
 			@businesess = display_stars(buisness)
+
 	end	
 
 	def new
+
 		@business = Business.new
+
 	end
 
 	def create
 
-		@business = Business.new
-		
+		@business = Business.new		
 		result = Business.create(business_params).valid?
 
 		if result
@@ -25,6 +28,7 @@ class BuisnessController < ApplicationController
 		end
 
 		render 'new'
+
 	end
 
 	def show
@@ -34,8 +38,6 @@ class BuisnessController < ApplicationController
 		raw_reviews = @buisness.reviews.order('id desc')
 		@reviews = rebuild_reviews(raw_reviews)
 
-		
-		
 		@reviews_count = @buisness.reviews.count
 		@rated_stars = @reviews.blank? ? 0 : (@buisness.reviews.sum(:rating) / @reviews_count).to_i
 		@unrated_stars = 5 - @rated_stars
@@ -50,7 +52,9 @@ class BuisnessController < ApplicationController
 
 	def rebuild_reviews(raw_reviews)
 		raw_reviews.inject([]) do |review, r|
+			
 			unrated_stars = 5 - r.rating
+
 			data = {
 				id: r.id,
 				user_name: r.user.name,
@@ -67,16 +71,19 @@ class BuisnessController < ApplicationController
 
 	def display_stars(buisness)
 		buisness.inject([]) do |businesess, b|
+
 			rating = b.reviews.sum(:rating)
-			ranked_stars = rating == 0 ? 0 : rating / b.reviews.count
+			rated_stars = rating == 0 ? 0 : rating / b.reviews.count
+			unrated_stars = 5 - rated_stars
+
 			data = {
 				id: b.id,
 				name: b.business_name,
 				rating: rating, 
 				reviews: b.reviews.count,
 				location: b.location,
-				ranked_stars: ranked_stars,
-				unranked_stars: (5 - ranked_stars)
+				rated_stars: rated_stars,
+				unrated_stars: unrated_stars
 			}
 
 			businesess << data

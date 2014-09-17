@@ -3,24 +3,24 @@
 	<hr>
 	<div class="col-md-4 pull-right">
 		<%= form_tag(businesses_path, :method => "get") do %>
-	  		<%= text_field_tag :search, params[:search], placeholder: "Search Business", class: 'form-control', style: 'width:200px;float:left;margin-right:5px;' %>
+	  		<%= text_field_tag :search, params[:search], placeholder: "Search Business", class: 'form-control search_business_field' %>
 	  		<%= submit_tag "Search", :name => nil, class: 'btn btn-info'%>
 		<% end %>
 	</div>
 	<div class="col-md-4">
-		<ul style="list-style-type: none;padding-left:0;">
+		<ul class="business_list">
 			<% @businesess.each do |b| %>
 				<li>
-					<ul class="rating-stars" style="margin-top:23px;padding:0;">
+					<ul class="rating-stars business_info" >
 						<a href="business/<%= b[:id] %>"><%= b[:name] %></a> 
-						<% b[:ranked_stars].times do  %>
+						<% b[:rated_stars].times do  %>
 							<li>
 								<i class="fa fa-star star"></i>
 							</li>
 						<% end %>
-						<% b[:unranked_stars].times do  %>
+						<% b[:unrated_stars].times do  %>
 							<li>
-								<i class="fa fa-star-o star"></i>
+								<i class="fa fa-star-o"></i>
 							</li>
 						<% end %>
 						( <%= b[:reviews] %> reviews)

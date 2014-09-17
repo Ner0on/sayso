@@ -9,14 +9,14 @@
 				<li>
 					<ul class="rating-stars" style="margin-top:23px;padding:0;">
 						<a href="business/<%= b[:id] %>"><%= b[:name] %></a> 
-						<% b[:ranked_stars].times do  %>
+						<% b[:rated_stars].times do  %>
 						<li>
 							<i class="fa fa-star star"></i>
 						</li>
 						<% end %>
-						<% b[:unranked_stars].times do  %>
+						<% b[:unrated_stars].times do  %>
 							<li>
-								<i class="fa fa-star-o star"></i>
+								<i class="fa fa-star-o"></i>
 							</li>
 						<% end %>
 						( <%= b[:reviews] %> reviews)

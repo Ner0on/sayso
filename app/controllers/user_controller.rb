@@ -15,16 +15,17 @@ class UserController < ApplicationController
 
 			buisness = Business.find(r.business_id)
 			rating = buisness.reviews.sum(:rating)
-			ranked_stars = rating == 0 ? 0 : rating / buisness.reviews.count
-			
+			rated_stars = rating == 0 ? 0 : rating / buisness.reviews.count
+			unrated_stars = 5 - rated_stars
+
 			data = {
 				id: buisness[:id],
 				name: buisness.business_name,
 				rating: rating, 
 				reviews: buisness.reviews.count,
 				location: buisness.location,
-				ranked_stars: ranked_stars,
-				unranked_stars: (5 - ranked_stars)
+				rated_stars: rated_stars,
+				unrated_stars: unrated_stars
 			}
 			reviews << data
 			

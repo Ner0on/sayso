@@ -1,4 +1,4 @@
-<div class="container" style="margin-bottom:50px;">
+<div class="container navigation_container">
 	<div class="navbar navbar-default navbar-fixed-top">
 	    <div class="container">
 	        <div class="navbar-header">
@@ -21,7 +21,7 @@
 		                    </div>
 		                    <%= f.submit "Sign in", class: "btn btn-default"  %>                
 	    	            <% end %>
-						<ul class="nav navbar-nav pull-right" style="border-right: 1px solid lightgray;">
+						<ul class="nav navbar-nav pull-right nav_list">
 							<li><a href="/users/sign_up" class="nav-btns">Sign up</a></li>
 						</ul>
 	                <% else %>
@@ -29,7 +29,7 @@
 		                   <li><a href="/add_business">Add business</a></li> 
 		                </ul>
 	                    <ul class="nav navbar-nav pull-right">
-	                      <li><span style="position:relative;display:block;padding:10px 15px;padding-top:15px;">Hello, <b><%=current_user.name%></b></span></li>
+	                      <li><span class="signed_user_span">Hello, <b><%=current_user.name%></b></span></li>
 	                      <li><a href="/user/<%= current_user.id %>">Profie</a></li>
 	                      <li><%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %> </li>
 	                    </ul>
